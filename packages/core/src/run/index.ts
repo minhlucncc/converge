@@ -806,7 +806,7 @@ export async function run(
         id: node.id,
         goalId: "inventory",
         summary: node.taskDef.title ?? node.id,
-        status: "todo",
+        status: opts?.resume ? undefined : "todo",
         source: "static",
         playbook: playbookName,
         metadata: {

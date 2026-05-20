@@ -228,10 +228,12 @@ export async function executeTask(
     try {
       const playbookName = process.env.CONVERGE_PLAYBOOK || "default";
       ensureRuntimeLedger(ctx.projectDir, playbookName, undefined);
+      // Extract leaf ID: "parent/child" -> "child", "task-id" -> "task-id"
+      const taskId = ctx.journalTaskId.split("/").pop() ?? ctx.journalTaskId;
       appendTaskStatus(
         ctx.projectDir,
         playbookName,
-        `.converge/journal/${playbookName}/tasks/${ctx.journalTaskId}`,
+        taskId,
         status,
         { checkpointMirrored: true },
       );
